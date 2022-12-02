@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itxihang.mall.mapper.CartMapper">
+<!--    通过userId查询购物车-->
+<!--    List<Cart> getUserById(int userId);-->
+    <select id="getUserById" resultType="Cart">
+        select * from m_cart where user_id = #{userId} and product_id = #{productId}
+    </select>
+<!--    //如果不相等则直接加入购物车-->
+<!--    Product selectProduct(Integer productId);-->
+<!--    CartDto insertCart(CartDto cartDto);-->
+    <select id="selectProduct" resultType="Product">
+        select * from m_product where id = #{productId}
+    </select>
+
+    <insert id="insertCart" useGeneratedKeys="true">
+        insert into m_cart values(null,#{productId},#{userId},1,#{price},#{amount},#{createTime},#{updateTime})
+    </insert>
+<!--    //如果相等则数量加1-->
+<!--    void updateCart(Integer productId);-->
+    <update id="updateCart">
+        update m_cart set amount = amount+1 where product_id = #{productId}  and user_id = #{userId}
+    </update>
+<!--    //查询购物车所有信息-->
+<!--    List<CartDto> selectCart(Integer userId);-->
+    <select id="selectCart"  resultMap="selectProduct">
+        select * from m_cart as c left join m_product as p on c.product_id = p.id where c.user_id = #{userId}
+    </select>
+    <resultMap id="selectProduct" type="com.itxihang.mall.dto.CartDto">
+          <id column="id" property="id"></id>
+          <result column="user_id" property="userId"></result>
+          <result column="amount" property="amount"></result>
+          <result column="store_id" property="storeId"></result>
+          <result column="product_id" property="productId"></result>
+          <result column="price" property="price"></result>
+
+        <association property="product" javaType="Product">
+            <id column="id" property="id"></id>
+            <result column="product_img" property="productImg"></result>
+            <result column="product_name" property="productName"></result>
+            <result column="price" property="price"></result>
+        </association>
+    </resultMap>
+<!--    //更改购物车数量-->
+<!--    void editCart(@Param("id") Integer id,@Param("amount") Integer amount);-->
+    <update id="editCart">
+        update m_cart set amount = #{amount} where id = #{id}
+    </update>
+<!--    //删除购物车的一条信息-->
+<!--    void deleteCartById(Integer id);-->
+       <delete id="deleteCartById">
+           delete from m_cart where id = #{id}
+       </delete>
+<!--    //删除购物车所有信息-->
+<!--    void deleteAllcartByUserId(Integer userId);-->
+       <delete id="deleteAllcartByUserId">
+           delete from m_cart where user_id = #{userId}
+       </delete>
+</mapper>

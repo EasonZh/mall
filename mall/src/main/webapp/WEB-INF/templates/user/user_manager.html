@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/static/css/minireset.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/bookManger.css}" />
+    <script language="JavaScript" th:src="@{/static/script/user.js}" ref="stylesheet"></script>
+    <style>
+      .div_bottom{
+        box-shadow:0 0 2px 2px #923f34;
+        border-radius: 5px;
+        background-color: #f1eded;
+        width: 85px;
+        height: 30px;
+        margin: 0 auto;
+      }
+
+      .div_button{
+        height: 30px;width: 85px;appearance: none;outline: 0;border-style: none;align-content: center;border-radius: 4px;
+        background-color: rgb(255,190,143);
+      }
+      .div_button:hover{
+        background-color: #ff6e5b;
+        box-shadow: inset 0px 0px 10px 4px #923f34;
+      }
+      .div_bottom2{
+        box-shadow:0 0 2px 2px #256951;
+        border-radius: 5px;
+        background-color: #256951;
+        width: 85px;
+        height: 30px;
+        margin: 0 auto;
+      }
+
+      .div_button2{
+        height: 30px;width: 85px;appearance: none;outline: 0;border-style: none;align-content: center;border-radius: 4px;
+        background-color: #5bffc4;
+      }
+      .div_button2:hover{
+        background-color:#73dfb9;
+        box-shadow: inset 0px 0px 10px 4px #256951;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="w">
+        <div class="header-left">
+          <a href="../../../index.html">
+            <img th:src="@{/static/img/logo2.gif}" alt=""/></a>
+          <h1>用户管理系统</h1>
+        </div>
+        <div class="header-right">
+          <a href="#" class="order">商品管理</a>
+          <a href="order_manager.html" class="destory">订单管理</a>
+          <a th:href="@{/product/1}" class="gohome">返回商城</a>
+        </div>
+      </div>
+    </div>
+    <div class="list">
+      <div class="w">
+        <div class="add">
+          <a href="book_edit.html">添加</a>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>用户名</th>
+              <th>用户角色</th>
+              <th>用户状态</th>
+              <th>操作</th>
+<!--              <th>操作/th>-->
+<!--              <th>销量</th>-->
+<!--              <th>库存</th>-->
+<!--              <th>操作</th>-->
+            </tr>
+          </thead>
+                <div th:each="userList:${users}">
+                  <div th:if="${userList.getRole()!=0}">
+                  <tr>
+                  <div><td th:text="${userList.getuName()}"></td></div>
+<!--                  <div th:if="${userList.getRole()==${session.user.getRole()}}"  style="visibility: hidden">-->
+<!--                    <td>管理者</td>-->
+<!--                  </div>-->
+                  <div th:if="${userList.getRole()==1}">
+                    <td >商家</td>
+                  </div>
+                  <div th:if="${userList.getRole()==2}">
+                    <td >普通用户</td>
+                  </div>
+                  <div th:if="${userList.getStatus()==1}">
+                     <td>账户已启用</td>
+                  </div>
+                  <div th:if="${userList.getStatus()==0}">
+                     <td>账户被禁用</td>
+                  </div>
+                  <td th:align="center" >
+                    <div th:if="${userList.getStatus()==1}" class="div_bottom" > <input type="button" class="div_button" th:onclick="|updateStatus(${userList.getId()},0)|" value="禁用账户"></div>
+                    <div th:if="${userList.getStatus()==0}" class="div_bottom2"> <input type="button" class="div_button2" th:onclick="|updateStatus(${userList.getId()},1)|" value="启用账户"></div>
+                  </td>
+
+
+<!--                  <td th:text=""></td>-->
+                </tr>
+                  </div>
+                </div>
+          </tbody>
+        </table>
+        <div class="footer">
+          <div class="footer-right">
+            <div>首页</div>
+            <div>上一页</div>
+            <ul>
+              <li class="active">1</li>
+              <li>2</li>
+              <li>3</li>
+            </ul>
+            <div>下一页</div>
+            <div>末页</div>
+            <span>共10页</span>
+            <span>30条记录</span>
+            <span>到第</span>
+            <input type="text" />
+            <span>页</span>
+            <button>确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="w">
+        <div class="top">
+          <ul>
+            <li>
+              <a href="">
+                <img src="../../static/img/bottom1.png" alt="" />
+                <span>大咖级讲师亲自授课</span>
+              </a>
+            </li>
+            <li>
+              <a href="">
+                <img src="../../static/img/bottom.png" alt="" />
+                <span>课程为学员成长持续赋能</span>
+              </a>
+            </li>
+            <li>
+              <a href="">
+                <img src="../../static/img/bottom2.png" alt="" />
+                <span>学员真是情况大公开</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="content">
+          <dl>
+            <dt>关于尚硅谷</dt>
+            <dd>教育理念</dd>
+            <!-- <dd>名师团队</dd>
+            <dd>学员心声</dd> -->
+          </dl>
+          <dl>
+            <dt>资源下载</dt>
+            <dd>视频下载</dd>
+            <!-- <dd>资料下载</dd>
+            <dd>工具下载</dd> -->
+          </dl>
+          <dl>
+            <dt>加入我们</dt>
+            <dd>招聘岗位</dd>
+            <!-- <dd>岗位介绍</dd>
+            <dd>招贤纳师</dd> -->
+          </dl>
+          <dl>
+            <dt>联系我们</dt>
+            <dd>http://www.atguigu.com</dd>
+            <dd></dd>
+          </dl>
+        </div>
+      </div>
+      <div class="down">
+        尚硅谷书城.Copyright ©2015
+      </div>
+    </div>
+  </body>
+</html>

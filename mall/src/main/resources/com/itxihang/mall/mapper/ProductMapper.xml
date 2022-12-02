@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itxihang.mall.mapper.ProductMapper">
+<!--    Product page();-->
+    <select id="page" resultType="Product">
+        select * from m_product
+    </select>
+<!--    //查询对应商家对应的产品-->
+<!--    List<Product> productPage(@Param("pageNum") Integer pageNum,@Param("id") int id);-->
+    <select id="productPage" resultType="com.itxihang.mall.dto.ProductDto">
+        select * from m_product p left join m_store s on  p.store_id  = s.id where s.seller_id = #{id}
+    </select>
+<!--    //商家添加商品-->
+<!--    void addProduct();-->
+     <insert id="addProduct" useGeneratedKeys="true">
+         insert into m_product(id,category_id,store_id,product_img,product_name,sale_status,price,stock)
+           <trim prefix="values(" suffix=")" suffixOverrides=",">
+               null,
+               <if test="categoryId!=null">
+                   #{categoryId},
+             </if>
+               <if test="storeId!=null">
+                   #{storeId},
+               </if>
+               <if test="productImg!=null">
+                   #{productImg},
+               </if>
+               <if test="productName!=null">
+                   #{productName},
+               </if>
+               1,
+               <if test="price!=null">
+                   #{price},
+               </if>
+               <if test="stock!=null">
+                   #{stock},
+               </if>
+           </trim>
+     </insert>
+<!--    //商家通过id查询商品-->
+<!--    Product selectProductById(Integer id);-->
+       <select id="selectProductById" resultType="Product">
+           select * from m_product where id = #{id}
+       </select>
+<!--    //商家修改商品-->
+<!--    void updateProductById(Product product);-->
+       <update id="updateProductById">
+           update m_product
+           <trim suffixOverrides=",">
+           <set>
+               <if test="categoryId!=null">
+                  category_id = #{categoryId},
+               </if>
+               <if test="storeId!=null">
+                  store_id = #{storeId},
+               </if>
+               <if test="productImg!=null">
+                  product_img = #{productImg},
+               </if>
+               <if test="productName!=null">
+                  product_name = #{productName},
+               </if>
+               <if test="price!=null">
+                  price = #{price},
+               </if>
+               <if test="saleStatus!=null">
+                  sale_status = #{saleStatus},
+               </if>
+               <if test="stock!=null">
+                  stock = #{stock},
+               </if>
+           </set>
+           </trim>
+           <where>
+               id = #{id}
+           </where>
+       </update>
+<!--    //商家删除商品-->
+<!--    void deleteProductById(Integer id);-->
+      <delete id="deleteProductById">
+          delete from m_product where id = #{id}
+      </delete>
+<!--    //模糊查询-->
+<!--    List<Product> selectByName(String mohu);-->
+      <select id="selectByName" resultType="Product">
+          select * from m_product
+          <where>
+              <if test="product!=null">
+                  product_name like '%${mohu}%'
+              </if>
+          </where>
+      </select>
+<!--    //根据分类查询商品-->
+<!--    List<Product> selectByCategoryId(Integer categoryId);-->
+    <select id="selectByCategoryId" resultType="com.itxihang.mall.dto.ProductDto">
+        SELECT * FROM `m_product` p left join m_store s on  p.store_id = s.id where p.category_id in(
+            select id from m_category where parent_id=#{categoryId}
+        )
+    </select>
+<!--    //商品数量减一-->
+<!--    void updateStock(Integer productId,Integer amount);-->
+<!--    void updateStock(@Param("productId") Integer productId,@Param("amount") Integer amount);-->
+     <update id="updateStock">
+         update m_product set stock = stock - #{amount} where id = #{productId}
+     </update>
+</mapper>

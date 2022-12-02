@@ -1,0 +1,23 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<configuration debug="true">-->
+<!--    &lt;!&ndash; 指定日志输出的位置 &ndash;&gt;-->
+<!--    <appender name="STDOUT"-->
+<!--              class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder>-->
+<!--            &lt;!&ndash; 日志输出的格式 &ndash;&gt;-->
+<!--            &lt;!&ndash; 按照顺序分别是：时间、日志级别、线程名称、打印日志的类、日志主体内容、换行 &ndash;&gt;-->
+<!--            <pattern>[%d{HH:mm:ss.SSS}] [%-5level] [%thread] [%logger] [%msg]%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    &lt;!&ndash; 设置全局日志级别。日志级别按顺序分别是：DEBUG、INFO、WARN、ERROR &ndash;&gt;-->
+<!--    &lt;!&ndash; 指定任何一个日志级别都只打印当前级别和后面级别的日志。 &ndash;&gt;-->
+<!--    <root level="DEBUG">-->
+<!--        &lt;!&ndash; 指定打印日志的appender，这里通过“STDOUT”引用了前面配置的appender &ndash;&gt;-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--    </root>-->
+
+<!--    &lt;!&ndash; 根据特殊需求指定局部日志级别 &ndash;&gt;-->
+<!--    <logger name="com.atguigu.crowd.mapper" level="DEBUG"/>-->
+
+<!--</configuration>-->

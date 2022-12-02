@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet"th:href="@{/static/css/minireset.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/bookManger.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/register.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/book_edit.css}" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="w">
+        <div class="header-left">
+          <a href="../../../index.html">
+            <img src="../../static/img/logo2.gif" alt=""
+          /></a>
+          <h1>编辑商品</h1>
+        </div>
+        <div class="header-right">
+          <a href="book_manager.html" class="order">商品管理</a>
+          <a href="order_manager.html" class="destory">订单管理</a>
+          <a th:href="@{/product/1}" class="gohome">返回商城</a>
+        </div>
+      </div>
+    </div>
+    <div class="login_banner">
+      <div class="register_form" th:each="product:${product}" th:object="${product}">
+        <form th:action="@{/product/updateProduct}">
+          <input name="id" th:value="*{id}" type="hidden">
+          <div class="form-item">
+            <div >
+              <label>名称:</label>
+              <input name="productName" type="text" placeholder="请输入名称" th:value="*{productName}"/>
+            </div>
+            <span class="errMess" style="visibility: visible;">请输入正确的名称</span
+            >
+          </div>
+          <div class="form-item">
+            <div>
+              <label>价格:</label>
+              <input name="price" type="number" placeholder="请输入价格" th:value="*{price}"/>
+            </div>
+            <span class="errMess">请输入正确数字</span>
+          </div>
+          <div class="form-item">
+            <div align="center">
+              <label>分类:</label>
+<!--              <input name="categoryId" type="text" placeholder="请输入作者" />-->
+              <select name="categoryId" th:field="*{categoryId}" th:value="*{categoryId}">
+                <option th:selected="*{categoryId==1006}" value="1006">手机</option>
+                <option th:selected="*{categoryId==1005}" value="1005">冰箱</option>
+                <option th:selected="*{categoryId==1007}" value="1007">上衣</option>
+                <option th:selected="*{categoryId==1008}" value="1008">饼干</option>
+              </select>
+            </div>
+            <span class="errMess">请输入正确作者</span>
+          </div>
+          <div class="form-item">
+            <div>
+              <label>图片:</label>
+              <input name="productImg" type="text" placeholder="请输入名称" th:value="*{productImg}"/>
+            </div>
+            <span class="errMess">请输入正确销量</span>
+          </div>
+          <div class="form-item">
+            <div align="center">
+              <label>商家:</label>
+<!--              <input name="storeId" type="text" placeholder="请输入名称" />-->
+              <select name="storeId" style="width:200px" th:field="*{storeId}" th:value="*{storeId}">
+                <option th:selected="*{storeId==1}" value="1">iphone手机商</option>
+                <option th:selected="*{storeId==2}" value="2">三只松鼠</option>
+                <option th:selected="*{storeId==3}" value="3">森马</option>
+                <option th:selected="*{storeId==4}" value="4">海尔</option>
+                <option th:selected="*{storeId==5}" value="5">小米</option>
+                <option th:selected="*{storeId==6}" value="6">华为</option>
+              </select>
+            </div>
+            <span class="errMess">请输入正确</span>
+          </div>
+          <div class="form-item">
+            <div align="center">
+              <label>销售状态:</label>
+<!--              <input name="storeId" type="text" placeholder="请输入名称" />-->
+              <select name="storeId" style="width:200px" th:field="*{saleStatus}" th:value="*{saleStatus}">
+                <option th:selected="*{saleStatus==1}" value="1">起售</option>
+                <option th:selected="*{saleStatus==0}" value="0">停售</option>
+              </select>
+            </div>
+            <span class="errMess">请输入正确</span>
+          </div>
+          <div class="form-item">
+            <div>
+              <label>库存:</label>
+              <input name="stock" type="number" placeholder="请输入库存" th:value="*{stock}"/>
+            </div>
+            <span class="errMess">请输入正确库存</span>
+          </div>
+
+          <button class="btn">提交</button>
+        </form>
+      </div>
+    </div>
+    <div class="bottom">
+      尚硅谷书城.Copyright ©2015
+    </div>
+  </body>
+</html>

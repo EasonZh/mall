@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itxihang.mall.mapper.UserMapper">
+<!--    User getUser(@Param("uName") String uname,@Param("uPassWord") String pwd);-->
+    <select id="getUser" resultType="user">
+        select * from m_user where uname = #{uName} and upassword = #{uPassWord}
+    </select>
+<!--    void saveUser(@Param("uName") String uname,@Param("uPassWord") String pwd,@Param("email") String email, @Param("phone") String phone);-->
+    <insert id="saveUser" useGeneratedKeys="true" >
+        insert into m_user  values (
+
+                null,
+
+               #{uName},
+
+
+                #{uPassWord},
+
+                 #{email},
+
+                #{phone},
+
+                 2,
+                 1
+
+                )
+
+    </insert>
+<!--    //查询所有用户-->
+<!--    List<User> getAllUser();-->
+    <select id="getAllUser" resultType="User">
+            select * from m_user
+    </select>
+<!--    //更改用户状态-->
+<!--    void updateUserStatus(Integer id,Integer status);-->
+    <update id="updateUserStatus">
+        update m_user
+        <set>
+            <if test="status!=null">
+                status = #{status}
+            </if>
+        </set>
+        <where>
+                 id = #{id}
+        </where>
+    </update>
+</mapper>

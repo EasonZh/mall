@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itxihang.mall.mapper.OrderMapper">
+<!--    //通过userId查购物车的信息-->
+<!--    List<Cart> selectCartById(Integer userId);-->
+    <select id="selectCartById" resultType="Cart">
+        select * from m_cart where user_id = #{userId}
+    </select>
+<!--    //插入数据到订单-->
+<!--    void addOrder(Order order);-->
+     <insert id="addOrder" useGeneratedKeys="true" keyProperty="id">
+         insert into m_order(id,order_no,buy_id,order_status,total_money,count,pay_time)
+         <trim prefix="values(" suffix=")" suffixOverrides=",">
+             null,
+             <if test="orderNo!=null">
+                 #{orderNo},
+             </if>
+             <if test="buyId!=null">
+                  #{buyId},
+             </if>
+
+                 #{orderStatus},
+
+
+                 #{totalMoney},
+
+
+                 #{count},
+
+              <if test="payTime">
+                  #{payTime},
+              </if>
+
+         </trim>
+     </insert>
+<!--    //删除购物车信息-->
+<!--    void deleteCartById(Integer userId);-->
+       <delete id="deleteCartById">
+           delete from m_cart where user_id = #{userId}
+       </delete>
+<!--    //增加订单详情-->
+<!--    void addOrderItem(OrderItem orderItem);-->
+       <insert id="addOrderItem" useGeneratedKeys="true" >
+           insert into m_orderitem(id,order_no,buy_id,store_id,product_id,product_name,product_img,price,amount,total_money,create_time)
+           <trim prefix="values(" suffix=")" suffixOverrides=",">
+               null,
+               <if test="orderNo!=null">
+                   #{orderNo},
+               </if>
+               <if test="buyId!=null">
+                   #{buyId},
+               </if>
+                <if test="storeId!=null">
+                   #{storeId},
+                </if>
+                <if test="productId!=null">
+                    #{productId},
+                </if >
+                <if test="productName!=null">
+                    #{productName},
+                </if>
+               <if test="productImg!=null">
+                    #{productImg},
+               </if>
+               <if test="price!=null">
+                   #{price},
+               </if>
+                <if test="amount!=null">
+                    #{amount},
+                </if>
+               <if test="totalMoney">
+                   #{totalMoney},
+               </if>
+               <if test="createTime">
+                   #{createTime},
+               </if>
+           </trim>
+       </insert>
+<!--    //查询所有订单-->
+<!--    List<Order> selectOrderById(Integer userId);-->
+       <select id="selectOrderById" resultType="Order">
+           select * from m_order where buy_id = #{userId}
+       </select>
+<!--    //查询订单详情-->
+<!--    List<OrderItem> selectOrderItemById(Integer userId);-->
+        <select id="selectOrderItemById" resultType="OrderItem">
+            select * from m_orderItem where order_no = #{orderNo}
+        </select>
+</mapper>
