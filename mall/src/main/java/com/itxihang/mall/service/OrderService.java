@@ -10,4 +10,6 @@ public interface OrderService {
     List<Order> addOrder(Integer userId);
 
     List<OrderItem> selectOrderItem(String orderNo);
+
+    Order buyProduct(Integer id, int userId);
 }

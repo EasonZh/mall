@@ -5,6 +5,7 @@ import com.itxihang.mall.dto.CartDto;
 import java.util.List;
 
 public interface CartService {
+   
     void selectProductById(int userId, Integer productId);
 
     List<CartDto> selectCart(Integer userId);

@@ -43,16 +43,29 @@
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+<!--        Aop-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!-- Spring 持久化层支持jar包 -->
+        <!-- Spring 在执行持久化层操作、与持久化层技术进行整合过程中，需要使用orm、jdbc、tx三个
+        jar包 -->
+        <!-- 导入 orm 包就可以通过 Maven 的依赖传递性把其他两个也导入 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>5.3.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
+
         <!-- Mybatis核心 -->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -103,6 +116,8 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
+        <!--        使用@RequestBody获取json格式的请求参数的条件：-->
+        <!--        1、导入jackson的依赖-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -130,6 +145,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
             <scope>compile</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
         </dependency>
     </dependencies>
     <build>

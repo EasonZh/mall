@@ -2,6 +2,7 @@ package com.itxihang.mall.controller;
 
 import com.itxihang.mall.pojo.Order;
 import com.itxihang.mall.pojo.OrderItem;
+import com.itxihang.mall.pojo.User;
 import com.itxihang.mall.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -27,5 +29,12 @@ public class OrderController {
         List<OrderItem>orderItems = orderService.selectOrderItem(orderNo);
         model.addAttribute("orderItems",orderItems);
         return "order/order_list";
+    }
+    @RequestMapping("/buyProduct/{id}")
+    public String buyProduct(@PathVariable("id")Integer id, HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        Order order = orderService.buyProduct(id,user.getId());
+        model.addAttribute("order",order);
+        return "order/order_display";
     }
 }

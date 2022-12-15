@@ -89,4 +89,9 @@
         <select id="selectOrderItemById" resultType="OrderItem">
             select * from m_orderItem where order_no = #{orderNo}
         </select>
+<!--    //查询地址-->
+<!--    Address selectAddressById(Integer userId);-->
+        <select id="selectAddressById" resultType="Address">
+            select * from m_address where user_id = #{userId}
+        </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.itxihang.mall.mapper;
 
+import com.itxihang.mall.pojo.Address;
 import com.itxihang.mall.pojo.Cart;
 import com.itxihang.mall.pojo.Order;
 import com.itxihang.mall.pojo.OrderItem;
@@ -19,4 +20,6 @@ public interface OrderMapper {
     List<Order> selectOrderById(Integer userId);
     //查询订单详情
     List<OrderItem> selectOrderItemById(String userId);
+    //查询地址
+    Address selectAddressById(Integer userId);
 }

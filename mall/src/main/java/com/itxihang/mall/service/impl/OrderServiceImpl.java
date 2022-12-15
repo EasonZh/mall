@@ -3,20 +3,23 @@ package com.itxihang.mall.service.impl;
 import com.itxihang.mall.exception.CustomerException;
 import com.itxihang.mall.mapper.OrderMapper;
 import com.itxihang.mall.mapper.ProductMapper;
-import com.itxihang.mall.pojo.Cart;
-import com.itxihang.mall.pojo.Order;
-import com.itxihang.mall.pojo.OrderItem;
-import com.itxihang.mall.pojo.Product;
+import com.itxihang.mall.pojo.*;
 import com.itxihang.mall.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -24,6 +27,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
     @Autowired
     private ProductMapper productMapper;
+//    @Transactional(propagation=Propagation.REQUIRES_NEW)
+    @Transactional
     @Override
     public List<Order>addOrder(Integer userId){
 
@@ -85,5 +90,41 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem>orderItems = orderMapper.selectOrderItemById(orderNo);
 
         return orderItems;
+    }
+    @Transactional(timeout = 3)
+    @Override
+    //购买单件商品
+    public Order buyProduct(Integer productId, int userId) {
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Order order = new Order();
+        OrderItem orderItem = new OrderItem();
+        Product product = productMapper.selectProductById(productId);
+        UUID uuid = UUID.randomUUID();
+        order.setOrderNo(uuid.toString());
+        order.setBuyId(userId);
+        order.setTotalMoney(product.getPrice().doubleValue());
+        Address address = orderMapper.selectAddressById(userId);
+        order.setAddressId(address.getId());
+        order.setCount(1);
+        //时间转换
+        order.setPayTime(LocalDateTime.now());
+        orderMapper.addOrder(order);
+        orderItem.setProductId(productId);
+        orderItem.setBuyId(userId);
+        orderItem.setOrderNo(uuid.toString());
+        orderItem.setAmount(1);
+        orderItem.setPrice(product.getPrice());
+        orderItem.setProductName(product.getProductName());
+        orderItem.setProductImg(product.getProductImg());
+        orderItem.setCreateTime(order.getPayTime());
+        orderItem.setStoreId(product.getStoreId());
+        orderItem.setTotalMoney(product.getPrice().doubleValue());
+
+        orderMapper.addOrderItem(orderItem);
+        return order;
     }
 }

@@ -32,14 +32,48 @@
         </property>
     </bean>
 
+    <!--必须通过文件解析器的解析才能将文件转换为MultipartFile对象-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    </bean>
+
+    <!--
+        配置默认的servlet处理静态资源
+        当前工程的web.xml配置的前端控DispatcherServlet的url - pattern是/
+        tomcat的web.xml配置的DefaultServlet的url-pattern也是/
+        此时，浏时器发送的请求会优先DispatcherServlet进行处理，但是DispatcherServlet无法处理静态资源
+        若配置了<mvc:default-servlet-handler />,此时浏览器发送的所有请求都会由DispatcherServlet处理
+        若配置了<mvc:default-servlet-handler />和<mvc:annotation-driven />
+        浏览器发送的请求会先被DispatcherServlet处理，无法处理在交给DefaultServlet处理
+    -->
 
     <!--配置默认的servlet处理静态资源-->
     <mvc:default-servlet-handler />
 
     <!--开启mvc的注解驱动-->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <!-- 处理响应中文内容乱码 -->
+            <bean
+                    class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="defaultCharset" value="UTF-8" />
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html</value>
+                        <value>application/json</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+
+
+
+    </mvc:annotation-driven>
+
+
 
     <!--配置视图控制器-->
     <mvc:view-controller path="/" view-name="index"></mvc:view-controller>
 <!--    <mvc:view-controller path="/to/add" view-name="employee_add"></mvc:view-controller>-->
+
 </beans>

@@ -19,7 +19,12 @@
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
+<!--    在web.xml中注册时，必须先注册CharacterEncodingFilter，再注册HiddenHttpMethodFilter-->
+<!--    原因：-->
+<!--    在 CharacterEncodingFilter 中通过 request.setCharacterEncoding(encoding) 方法设置字-->
+<!--    符集的-->
+<!--    request.setCharacterEncoding(encoding) 方法要求前面不能有任何获取请求参数的操作-->
+<!--    而 HiddenHttpMethodFilter 恰恰有一个获取请求方式的操作：-->
     <filter>
         <filter-name>HiddenHttpMethodFilter</filter-name>
         <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
