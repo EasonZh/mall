@@ -23,7 +23,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     //分页查询产品信息
-    @RequestMapping("/product/{pageNum}")
+    @RequestMapping("/productPage/{pageNum}")
     public String pageInfo(@PathVariable("pageNum") Integer pageNum, String page, Model model){
         PageInfo<Product> pageInfo = productService.pageInfo(pageNum);
         model.addAttribute("pageInfo",pageInfo);

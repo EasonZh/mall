@@ -91,29 +91,23 @@ public class OrderServiceImpl implements OrderService {
 
         return orderItems;
     }
-    @Transactional(timeout = 3)
+
     @Override
-    //购买单件商品
-    public Order buyProduct(Integer productId, int userId) {
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public Order buyProduct(int id, int userId) {
         Order order = new Order();
         OrderItem orderItem = new OrderItem();
-        Product product = productMapper.selectProductById(productId);
+        Product product = productMapper.selectProductById(id);
         UUID uuid = UUID.randomUUID();
         order.setOrderNo(uuid.toString());
         order.setBuyId(userId);
         order.setTotalMoney(product.getPrice().doubleValue());
-        Address address = orderMapper.selectAddressById(userId);
-        order.setAddressId(address.getId());
+//        Address address = orderMapper.selectAddressById(userId);
+//        order.setAddressId(address.getId());
         order.setCount(1);
         //时间转换
         order.setPayTime(LocalDateTime.now());
         orderMapper.addOrder(order);
-        orderItem.setProductId(productId);
+        orderItem.setProductId(id);
         orderItem.setBuyId(userId);
         orderItem.setOrderNo(uuid.toString());
         orderItem.setAmount(1);
@@ -126,5 +120,7 @@ public class OrderServiceImpl implements OrderService {
 
         orderMapper.addOrderItem(orderItem);
         return order;
+
     }
+
 }

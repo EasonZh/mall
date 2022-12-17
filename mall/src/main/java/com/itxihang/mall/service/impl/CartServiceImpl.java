@@ -7,14 +7,12 @@ import com.itxihang.mall.mapper.ProductMapper;
 import com.itxihang.mall.pojo.Cart;
 import com.itxihang.mall.pojo.Product;
 import com.itxihang.mall.service.CartService;
-import com.mysql.cj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -45,6 +43,7 @@ public class CartServiceImpl implements CartService {
         int stock = product.getStock();
         if(saleStatus==0){
             throw new CustomerException("已停售");
+
         }
         if(stock == 0){
             throw new CustomerException("无货，请耐心等待");

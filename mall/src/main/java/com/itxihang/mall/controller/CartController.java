@@ -23,7 +23,7 @@ import java.util.List;
 public class CartController {
     @Autowired
     private CartService cartService;
-    @RequestMapping("/product/addCart/{id}")
+    @RequestMapping("/addCart/{id}")
     public String addCart(@PathVariable("id")Integer id, HttpSession session, Model model){
         //首先根据当前用户去查购物车中是否有这个商品
         User user = (User) session.getAttribute("user");
@@ -33,7 +33,7 @@ public class CartController {
         return "redirect:/cart/index";
     }
     @RequestMapping("/cart/index")
-    public String index(HttpSession session,Model model){
+    public String index(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
          List<CartDto> cartDtos = cartService.selectCart(user.getId());
          Integer totalAmount = 0;

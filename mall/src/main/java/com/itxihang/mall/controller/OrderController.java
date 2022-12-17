@@ -31,9 +31,10 @@ public class OrderController {
         return "order/order_list";
     }
     @RequestMapping("/buyProduct/{id}")
-    public String buyProduct(@PathVariable("id")Integer id, HttpSession session, Model model){
+    public String buyProduct(@PathVariable("id")int id, HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
-        Order order = orderService.buyProduct(id,user.getId());
+        Order order = new Order();
+        order = orderService.buyProduct(id,user.getId());
         model.addAttribute("order",order);
         return "order/order_display";
     }

@@ -11,5 +11,5 @@ public interface OrderService {
 
     List<OrderItem> selectOrderItem(String orderNo);
 
-    Order buyProduct(Integer id, int userId);
+    Order buyProduct(int id, int userId);
 }

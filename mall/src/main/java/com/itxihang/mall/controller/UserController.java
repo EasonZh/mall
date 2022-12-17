@@ -21,20 +21,23 @@ import java.util.List;
 public class UserController {
     @Autowired
    private UserService userService;
-    @PostMapping("/login")
+    @RequestMapping("/login")
     public String login(String uname, String pwd, HttpSession session, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
         User user = userService.getUser(uname,pwd);
          if(user!=null){
              if(user.getStatus()==1) {
                  session.setAttribute("user", user);
-                 return "redirect:/product/1";
+                 return "redirect:/productPage/1";
              }else{
                  out.print("<script language='javascript'>alert('您的账户已被禁用')</script>");
                  return "user/login";
              }
          }
-             out.print("<script language='javascript'>alert('用户名或密码错误')</script>");
+//         else{
+//             out.print("<script language='javascript'>alert('用户名或密码错误')</script>");
+//         }
+        out.print("<script language='javascript'>alert('请登录您的正确的账号')</script>");
              return "user/login";
 
     }

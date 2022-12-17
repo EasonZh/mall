@@ -1,5 +1,5 @@
 function addCart(id){
-    window.location.href='addCart/'+id;
+    window.location.href='/addCart/'+id;
 }
 
 function buyProduct(id){

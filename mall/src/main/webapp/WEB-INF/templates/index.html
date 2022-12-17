@@ -21,14 +21,14 @@
             <i class="iconfont icon-ai-arrow-down"></i>
           </div>
           <div class="topbar-right" th:if="${session.user==null}">
-            <a href="user/login.html" class="login">登录</a>
-            <a href="user/regist.html" class="register">注册</a>
+            <a th:href="@{/user/login}" class="login">登录</a>
+            <a th:href="@{/user/register}" class="register">注册</a>
             <a th:href="@{/cart/index}" class="cart iconfont icon-gouwuche">
               购物车
               <div class="cart-num">3</div>
             </a>
-            <a th:href="@{user/logout}" class="register">退出</a>
-            <a href="manager/book_manager.html"  class="admin">后台管理</a>
+            <a th:href="@{/user/logout}" class="register">退出</a>
+            <a href="/manager/book_manager.html"  class="admin">后台管理</a>
           </div>
           <div class="topbar-right" th:unless="${session.user==null}">
             <!--  登录后风格-->
